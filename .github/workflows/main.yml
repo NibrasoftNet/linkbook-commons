@@ -28,6 +28,9 @@ jobs:
       - name: Set registry URL
         run: echo "@NibrasoftNet:registry=$NPM_REGISTRY_URL" >> ~/.npmrc
 
+      - name: Debug .npmrc
+        run: cat ~/.npmrc
+        
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
