@@ -12,7 +12,13 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-        
+
+      - name: Display secret value (for debugging)
+        run: echo "Secret Value: ${{ secrets.linkbook }}"
+
+      - name: Update npm
+        run: npm install -g npm
+
       - name: Install PNPM
         run: npm install -g pnpm
 
@@ -30,7 +36,7 @@ jobs:
 
       - name: Debug .npmrc
         run: cat ~/.npmrc
-        
+
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
