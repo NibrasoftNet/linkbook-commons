@@ -12,12 +12,12 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
+        
+      - name: Install PNPM
+        run: npm install -g pnpm
 
       - name: Install and build
-        run: npm install
-
-      - name: Authenticate with GitHub Packages
-        run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" > ~/.npmrc
+        run: pnpm install
 
       - name: Publish to registry
         uses: actions/setup-node@v2
