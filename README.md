@@ -5,5 +5,5 @@
 ## Installation
 
 ```bash
-$ pnpm install
+$ pnpm i @NibrasoftNet/linkbook-commons
 ```
