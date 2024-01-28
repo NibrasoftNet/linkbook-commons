@@ -10,7 +10,7 @@
   "types": "dist/index.d.ts",
   "publishConfig": {
     "access": "public",
-    "registry": "https://npm.pkg.github.com/@NibrasoftNet"
+    "registry": "https://npm.pkg.github.com/@nibrasoftnet"
   },
   "files": [
     "dist/**/*"
