@@ -31,7 +31,7 @@ jobs:
           node-version: 16
           
       - name: Try to login
-        run: pnpm login --registry=https://npm.pkg.github.com --scope=@NibrasoftNet
+        run: pnpm adduser --registry=https://npm.pkg.github.com --scope=@NibrasoftNet
           
 
       - name: Publish to registry
