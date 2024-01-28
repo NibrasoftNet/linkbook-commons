@@ -1,5 +1,7 @@
 name: linkbook-commons
 
+permissions: read-all
+
 on:
   push:
     branches:
