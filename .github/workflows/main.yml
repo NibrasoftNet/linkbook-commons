@@ -20,7 +20,7 @@ jobs:
         run: pnpm install
         
       - name: Authenticate with GitHub Packages
-        run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.linkbook }}" > ~/.npmrc
+        run: echo "//npm.pkg.github.com/:_authToken=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" > ~/.npmrc
 
       - name: Set registry URL
         run: echo "@NibrasoftNet:registry=https://npm.pkg.github.com" >> ~/.npmrc
