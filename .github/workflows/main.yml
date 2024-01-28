@@ -31,5 +31,5 @@ jobs:
           node-version: 16
 
       - name: Publish to registry
-        run: npm publish --access public
+        run: pnpm publish --access public
 
