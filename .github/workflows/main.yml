@@ -10,11 +10,13 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-22.04
+    permissions:
+      contents: read
+      packages: write
 
     steps:
-      - name: Checkout repository
+      - name: checkout to repository
         uses: actions/checkout@v2
-
       - name: Update npm
         run: npm install -g npm
 
@@ -22,28 +24,16 @@ jobs:
         run: npm install -g pnpm
 
       - name: Install and build
-        run: pnpm install
-
-      - name: Set up environment variables
-        run: echo "NPM_REGISTRY_URL=https://npm.pkg.github.com" >> $GITHUB_ENV
-
-      - name: Authenticate with GitHub Packages
-        run: echo "//npm.pkg.github.com/:_authToken=${{secrets.GITHUB_TOKEN}}" >> ~/.npmrc
-
-      - name: Set registry URL
-        run: echo "@NibrasoftNet:registry=$NPM_REGISTRY_URL" >> ~/.npmrc
-
-      - name: Debug .npmrc
-        run: cat ~/.npmrc
-
-      - name: Setup Node.js
+        run: pnpm install --no-frozen-lockfile
+        
+      - name: publish to registry
         uses: actions/setup-node@v2
         with:
           node-version: 16
-          registry-url: $NPM_REGISTRY_URL
+          registry-url: 'https://npm.pkg.github.com'
           scope: '@NibrasoftNet'
 
       - name: Publish to registry
-        run: pnpm publish --access public
+        run: pnpm publish --access public --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
