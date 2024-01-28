@@ -18,6 +18,10 @@ jobs:
 
       - name: Install and build
         run: pnpm install
+        
+      - name: Authenticate with GitHub Packages
+        run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" > ~/.npmrc
+
 
       - name: Publish to registry
         uses: actions/setup-node@v2
@@ -27,6 +31,4 @@ jobs:
           scope: '@NibrasoftNet'
           
       - run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
