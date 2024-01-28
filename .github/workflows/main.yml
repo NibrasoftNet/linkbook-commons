@@ -1,5 +1,7 @@
 name: linkbook-commons
 
+permissions: read-all
+
 on:
   push:
     branches:
@@ -12,24 +14,36 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-        
+
+      - name: Update npm
+        run: npm install -g npm
+
       - name: Install PNPM
         run: npm install -g pnpm
 
       - name: Install and build
         run: pnpm install
-        
+
+      - name: Set up environment variables
+        run: echo "NPM_REGISTRY_URL=https://npm.pkg.github.com" >> $GITHUB_ENV
+
       - name: Authenticate with GitHub Packages
-        run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.linkbook }}" > ~/.npmrc
+        run: echo "//npm.pkg.github.com/:_authToken=${{secrets.GITHUB_TOKEN}}" >> ~/.npmrc
 
       - name: Set registry URL
-        run: echo "@NibrasoftNet:registry=https://npm.pkg.github.com" >> ~/.npmrc
+        run: echo "@NibrasoftNet:registry=$NPM_REGISTRY_URL" >> ~/.npmrc
+
+      - name: Debug .npmrc
+        run: cat ~/.npmrc
 
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
           node-version: 16
+          registry-url: $NPM_REGISTRY_URL
+          scope: '@NibrasoftNet'
 
       - name: Publish to registry
         run: pnpm publish --access public
-
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
