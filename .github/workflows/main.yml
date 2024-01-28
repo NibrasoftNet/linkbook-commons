@@ -13,9 +13,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Display secret value (for debugging)
-        run: echo "Secret Value ${{secrets.GITHUB_TOKEN}}"
-
       - name: Update npm
         run: npm install -g npm
 
@@ -29,7 +26,7 @@ jobs:
         run: echo "NPM_REGISTRY_URL=https://npm.pkg.github.com" >> $GITHUB_ENV
 
       - name: Authenticate with GitHub Packages
-        run: echo "//npm.pkg.github.com/:_authToken=${{secrets.linkbook}}" >> ~/.npmrc
+        run: echo "//npm.pkg.github.com/:_authToken=${{secrets.GITHUB_TOKEN}}" >> ~/.npmrc
 
       - name: Set registry URL
         run: echo "@NibrasoftNet:registry=$NPM_REGISTRY_URL" >> ~/.npmrc
@@ -46,3 +43,5 @@ jobs:
 
       - name: Publish to registry
         run: pnpm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
