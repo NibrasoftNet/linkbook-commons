@@ -29,10 +29,8 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: 16
-          
-      - name: Try to login
-        run: pnpm adduser --registry=https://npm.pkg.github.com --scope=@NibrasoftNet
-          
+          registry-url: 'https://npm.pkg.github.com'
+          scope: '@NibrasoftNet'
 
       - name: Publish to registry
         run: pnpm publish --access public
