@@ -1,0 +1,35 @@
+name: linkbook-commons
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        
+      - name: Install PNPM
+        run: npm install -g pnpm
+
+      - name: Install and build
+        run: pnpm install
+        
+      - name: Authenticate with GitHub Packages
+        run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.linkbook }}" > ~/.npmrc
+
+      - name: Set registry URL
+        run: echo "@NibrasoftNet:registry=https://npm.pkg.github.com" >> ~/.npmrc
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+
+      - name: Publish to registry
+        run: pnpm publish --access public
+
