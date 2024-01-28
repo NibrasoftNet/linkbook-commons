@@ -1,6 +1,6 @@
 ## Description
 
-[linkbook-commons]() common library for project.
+[linkbook-commons]() common library for linkBook project.
 
 ## Installation
 
