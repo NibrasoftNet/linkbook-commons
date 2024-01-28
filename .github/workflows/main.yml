@@ -14,8 +14,15 @@ jobs:
     steps:
       - name: checkout to repository
         uses: actions/checkout@v2
-      - name: install and build
-        run: npm ci
+      - name: Update npm
+        run: npm install -g npm
+
+      - name: Install PNPM
+        run: npm install -g pnpm
+
+      - name: Install and build
+        run: pnpm install
+        
       - name: publish to registry
         uses: actions/setup-node@v2
         with:
