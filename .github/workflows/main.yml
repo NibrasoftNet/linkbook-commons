@@ -4,18 +4,27 @@ on:
   push:
     branches:
       - main
+
 jobs:
-  buld-and-deploy:
-    runs-on: ubuntu-latest
+  build-and-deploy:
+    runs-on: ubuntu-22.04
+
     steps:
-      - name: checkout to repository
+      - name: Checkout repository
         uses: actions/checkout@v2
-      - name: install and build
+
+      - name: Install and build
         run: npm ci
-      - name: publish to registry
+
+      - name: Authenticate with GitHub Packages
+        run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" > ~/.npmrc
+
+      - name: Publish to registry
         uses: actions/setup-node@v2
         with:
-          node-version: 20
+          node-version: 16
           registry-url: 'https://npm.pkg.github.com'
           scope: '@NibrasoftNet'
+          
       - run: npm publish
+
