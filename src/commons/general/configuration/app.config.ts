@@ -1,5 +1,5 @@
 import { registerAs } from '@nestjs/config';
-import { AppConfig } from './app-config.type';
+import { AppConfigType } from './app-config.type';
 import {
   IsEnum,
   IsInt,
@@ -50,7 +50,7 @@ class EnvironmentVariablesValidator {
   APP_HEADER_LANGUAGE: string;
 }
 
-export default registerAs<AppConfig>('app', () => {
+export default registerAs<AppConfigType>('app', () => {
   validateConfig(process.env, EnvironmentVariablesValidator);
 
   return {
