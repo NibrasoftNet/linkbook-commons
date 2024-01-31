@@ -1,8 +1,6 @@
-import appConfig from "./app.config";
-import databaseConfig from "./database.config";
-import authConfig from "./auth.config";
-
-export { appConfig ,  authConfig , databaseConfig }
+export * as appConfig from "./app.config";
+export * as databaseConfig from "./database.config";
+export * as authConfig from "./auth.config";
 
 export * from './auth-config.type'
 export * from './app-config.type'
