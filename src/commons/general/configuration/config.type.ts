@@ -1,10 +1,10 @@
-import { AppConfig } from './app-config.type';
+import { AppConfigType } from './app-config.type';
 import { AuthConfig } from './auth-config.type';
 import { DatabaseConfig } from './database-config.type';
 
 
 export type AllConfigType = {
-    app: AppConfig;
+    app: AppConfigType;
     auth: AuthConfig,
     database: DatabaseConfig;
 };
