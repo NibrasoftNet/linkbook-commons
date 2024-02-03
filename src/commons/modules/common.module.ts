@@ -4,5 +4,6 @@ import { IsExist } from '../general';
 @Module({
   imports: [],
   providers: [IsExist],
+  exports: [IsExist]
 })
 export class CommonModule {}
