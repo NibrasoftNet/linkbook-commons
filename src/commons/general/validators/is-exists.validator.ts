@@ -3,7 +3,6 @@ import {
   ValidatorConstraintInterface,
 } from 'class-validator';
 import { DataSource } from 'typeorm';
-import { InjectDataSource } from '@nestjs/typeorm';
 import { ValidationArguments } from 'class-validator/types/validation/ValidationArguments';
 import { Injectable } from '@nestjs/common';
 import { HttpResponseException } from '../exceptions';
@@ -15,16 +14,14 @@ class ValidationEntity {
 @Injectable()
 @ValidatorConstraint({ name: 'IsExist', async: true })
 export class IsExist implements ValidatorConstraintInterface {
-  constructor(
-    @InjectDataSource()
-    readonly dataSource: DataSource,
-  ) {}
 
   async validate(value: string, validationArguments: ValidationArguments) {
     try {
       const repository = validationArguments.constraints[0];
       const pathToProperty = validationArguments.constraints[1];
-      const entity = (await this.dataSource.getRepository(repository).findOne({
+      const entityDatasource:DataSource = validationArguments.constraints[2]
+      console.log('entityDatasource', entityDatasource);
+      const entity = (await entityDatasource.getRepository(repository).findOne({
         where: {
           [pathToProperty]: value,
         },
