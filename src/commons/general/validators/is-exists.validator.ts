@@ -2,34 +2,27 @@ import {
   ValidatorConstraint,
   ValidatorConstraintInterface,
 } from 'class-validator';
-import { DataSource } from 'typeorm';
 import { ValidationArguments } from 'class-validator/types/validation/ValidationArguments';
-import { Injectable } from '@nestjs/common';
 import { HttpResponseException } from '../exceptions';
 
-
-class ValidationEntity {
-}
-
-@Injectable()
 @ValidatorConstraint({ name: 'IsExist', async: true })
 export class IsExist implements ValidatorConstraintInterface {
-
-  async validate(value: string, validationArguments: ValidationArguments) {
+  async validate(value: any, validationArguments: ValidationArguments) {
     try {
-      const repository = validationArguments.constraints[0];
-      const pathToProperty = validationArguments.constraints[1];
-      const entityDatasource:DataSource = validationArguments.constraints[2]
-      console.log('entityDatasource', entityDatasource);
-      const entity = (await entityDatasource.getRepository(repository).findOne({
-        where: {
-          [pathToProperty]: value,
-        },
-      })) as ValidationEntity;
-      if (!entity) {
+      const entity = validationArguments.constraints[0];
+      const entityKey = validationArguments.constraints[1];
+      console.log('resty', entity);
+      const entityInstance = await entity.dataSource
+        .getRepository(entity.target)
+        .findOne({
+          where: {
+            [entityKey]: value,
+          },
+        });
+      if (!entityInstance) {
         return false;
       }
-      return !!entity;
+      return !!entityInstance;
     } catch (error) {
       error.status = 422;
       throw new HttpResponseException(error);

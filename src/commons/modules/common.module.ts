@@ -1,9 +1,8 @@
 import { Module } from '@nestjs/common';
-import { IsExist } from '../general';
 
 @Module({
   imports: [],
-  providers: [IsExist],
-  exports: [IsExist]
+  providers: [],
+  exports: [],
 })
 export class CommonModule {}

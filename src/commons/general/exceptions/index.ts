@@ -1,1 +1,1 @@
-export * from './http-response.exception'
+export * from './http-response.exception';

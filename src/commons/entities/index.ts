@@ -1,1 +1,1 @@
-export * from './entity-helper'
+export * from './entity-helper';
