@@ -5,8 +5,8 @@ import {
 import { ValidationArguments } from 'class-validator/types/validation/ValidationArguments';
 import { HttpResponseException } from '../exceptions';
 
-@ValidatorConstraint({ name: 'IsExist', async: true })
-export class IsExist implements ValidatorConstraintInterface {
+@ValidatorConstraint({ name: 'IsNotExist', async: true })
+export class IsNotExist implements ValidatorConstraintInterface {
   async validate(value: any, validationArguments: ValidationArguments) {
     try {
       const entity = validationArguments.constraints[0];
@@ -18,10 +18,10 @@ export class IsExist implements ValidatorConstraintInterface {
             [entityKey]: value,
           },
         });
-      if (!entityInstance) {
+      if (entityInstance) {
         return false;
       }
-      return !!entityInstance;
+      return !entityInstance;
     } catch (error) {
       error.status = 422;
       throw new HttpResponseException(error);
