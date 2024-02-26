@@ -1,8 +1,7 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
 
-// Define a generic factory function to create PaginationResultDto dynamically
 // eslint-disable-next-line @typescript-eslint/naming-convention
-export function createPaginationResultDto<T>(ItemType: new () => T) {
+export function CreatePaginationResultDto<T>(ItemType: new () => T) {
   @ObjectType({ isAbstract: true })
   abstract class PaginationResultDtoClass {
     @Field(() => [ItemType])
@@ -24,12 +23,14 @@ export function createPaginationResultDto<T>(ItemType: new () => T) {
     readonly totalPages: number;
 
     constructor(
+      items: T[],
       totalCount: number,
       hasNextPage: boolean,
       hasPreviousPage: boolean,
       currentPage: number,
       totalPages: number,
     ) {
+      this.items = items;
       this.totalCount = totalCount;
       this.hasNextPage = hasNextPage;
       this.hasPreviousPage = hasPreviousPage;
