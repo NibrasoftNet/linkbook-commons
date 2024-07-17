@@ -1,6 +1,6 @@
 ## Description
 
-[linkbook-commons]() common library for linkBook project.
+[linkbook-commons]() common library for linkBook project to be installed in all microservices.
 
 ## Installation
 
